@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 所需要实现的接口全限定名-->
+<mapper namespace="com.qfedu.mtl.dao.CategoryDAO">
+    <resultMap id="categoryMap" type="Category">
+        <id column="category_id" property="categoryId"></id>
+        <result column="category_name" property="categoryName"></result>
+        <result column="category_icon" property="categoryIcon"></result>
+        <result column="category_status" property="categoryStatus"></result>
+    </resultMap>
+
+    <select id="selectCategories" resultMap="categoryMap">
+        select category_id,category_name,category_icon,category_status
+        from tb_category
+        where category_status=1
+    </select>
+</mapper>    

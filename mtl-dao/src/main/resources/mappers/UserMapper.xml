@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 所需要实现的接口全限定名-->
+<mapper namespace="com.qfedu.mtl.dao.UserDAO">
+    <resultMap id="userMaps" type="User">
+        <id column="user_id" property="userId"></id>
+        <result column="user_name" property="userName"></result>
+        <result column="user_password" property="userPwd"></result>
+        <result column="user_salt" property="salt"></result>
+    </resultMap>
+    <select id="selectUserByUserName" resultMap="userMaps">
+        select user_id,user_name,user_password,user_salt
+        from tb_user
+        where user_name=#{userName}
+    </select>
+</mapper>    

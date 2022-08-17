@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 所需要实现的接口全限定名-->
+<mapper namespace="com.qfedu.mtl.dao.BasicInfoDAO">
+    <resultMap id="basicInfoMap" type="BasicInfo">
+        <id column="basic_info_id" property="basicInfoId"></id>
+        <result column="basic_info_name" property="basicInfoName"></result>
+        <result column="basic_info_status" property="basicInfoStatus"></result>
+        <result column="basic_info_step" property="basicInfoStep"></result>
+        <collection property="infoDetailList" ofType="InfoDetail">
+            <result column="info_detail_id" property="infoDetailId"></result>
+            <result column="info_detail_name" property="infoDetailName"></result>
+            <result column="info_detail_desc" property="infoDetailDesc"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectBasicInfoByGoodsId" resultMap="basicInfoMap">
+        select basic_info_id,basic_info_name,basic_info_status,basic_info_step,
+               info_detail_id,info_detail_name,info_detail_desc
+               from tb_good_detail gd inner join tb_info_detail d inner join tb_basic_info b
+                on gd.fk_info_detail_id=d.info_detail_id and d.fk_basic_info_id=b.basic_info_id
+                where gd.fk_good_id=#{goodsId} and b.basic_info_status=1 and b.basic_info_step=#{step}
+    </select>
+
+    <select id="selectInfoDetailsByIds" resultMap="basicInfoMap">
+        select basic_info_id,basic_info_name,basic_info_status ,basic_info_step,
+               info_detail_id,info_detail_name,info_detail_desc,fk_basic_info_id
+        from tb_info_detail d inner join tb_basic_info b
+        on d.fk_basic_info_id=b.basic_info_id
+        where d.info_detail_id in (${ids})
+    </select>
+</mapper>    

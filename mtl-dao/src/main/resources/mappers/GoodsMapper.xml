@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 所需要实现的接口全限定名-->
+<mapper namespace="com.qfedu.mtl.dao.GoodsDAO">
+
+    <resultMap id="goodsMap" type="Goods">
+        <id column="good_id" property="goodsId"></id>
+        <result column="good_name" property="goodsName"></result>
+        <result column="good_img" property="goodsImg"></result>
+        <result column="good_cost" property="goodsCost"></result>
+        <result column="good_min_price" property="goodsMinPrice"></result>
+    </resultMap>
+
+    <select id="selectGoodsByBrandIdWithPage" resultMap="goodsMap">
+        select good_id,good_name,good_img,good_cost,good_min_price
+        from tb_good g inner join tb_brand_good bg
+        on g.good_id=bg.fk_good_id
+        where bg.fk_brand_id=#{brandId} limit #{start},#{limit}
+    </select>
+
+    <select id="selectCountByBrandId" resultType="int">
+        select count(1)
+        from tb_good g inner join tb_brand_good bg
+        on g.good_id=bg.fk_good_id
+        where bg.fk_brand_id=#{brandId}
+    </select>
+
+    <select id="selectGoodsById" resultMap="goodsMap">
+        select good_id,good_name,good_img,good_cost,good_min_price
+        from tb_good where good_id = #{goodId}
+    </select>
+
+</mapper>    

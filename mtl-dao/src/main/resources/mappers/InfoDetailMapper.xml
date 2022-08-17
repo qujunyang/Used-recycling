@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace = 所需要实现的接口全限定名-->
+<mapper namespace="com.qfedu.mtl.dao.InfoDetailDAO">
+
+    <select id="countPriceInfoDetails" resultType="int">
+        select sum(good_discount)
+        from tb_good_detail
+        where fk_good_id=#{goodsId} and fk_info_detail_id in (${ids})
+    </select>
+
+</mapper>    
